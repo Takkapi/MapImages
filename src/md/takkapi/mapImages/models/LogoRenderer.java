@@ -21,6 +21,7 @@ public class LogoRenderer extends MapRenderer {
 
     public LogoRenderer(String url){
         //load URL
+        load(url);
         done = false;
     }
 
