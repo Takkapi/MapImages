@@ -1,8 +1,0 @@
-main: md.takkapi.mapImages.CustomMaps
-author: Takkapi
-version: 1.0
-name: MapImages
-api-version: 1.16
-
-commands:
-  map:
