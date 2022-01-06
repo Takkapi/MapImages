@@ -1,0 +1,9 @@
+name: Mapimages
+version: '${project.version}'
+main: md.takkapi.mapImages.CustomMaps
+api-version: 1.17
+authors: [ Takkapi, BC5 ]
+description: Create maps with images
+
+commands:
+  map:
