@@ -25,8 +25,27 @@ public class ImageCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if(args.length == 0) {
-            player.sendMessage(ChatColor.DARK_RED + "Invalid usage, /link <Image_URL>");
+            player.sendMessage(ChatColor.DARK_RED + "Invalid usage, /getmap <url>");
             return true;
+        }
+
+        boolean spawnNewMap = false;
+        ItemStack mainHand  = player.getInventory().getItemInMainHand();
+
+        // Deny map creation if player is not holding a map and doesn't have relevant permission
+        if(mainHand.getType() != Material.MAP) {
+            if(!player.hasPermission("mapimages.getmap.thinair")) {
+                player.sendMessage(ChatColor.DARK_RED + "You must be holding a map");
+                return true;
+            } else {
+                spawnNewMap = true;
+            }
+        } else {
+            // Otherwise multiple stacked empty maps would be overwritten to 1 filled map
+            if(mainHand.getAmount() > 1) {
+                player.sendMessage(ChatColor.DARK_RED + "You must be holding exactly one map");
+                return true;
+            }
         }
 
         MapView view = Bukkit.createMap(player.getWorld());
@@ -34,7 +53,7 @@ public class ImageCommand implements CommandExecutor {
 
         LogoRenderer renderer = new LogoRenderer();
         if (!renderer.load(args[0])) {
-            player.sendMessage(ChatColor.DARK_RED + "Could not load image. Please make sure that url is correct!");
+            player.sendMessage(ChatColor.DARK_RED + "Image load failure. Check URL validity");
             return true;
         }
         view.addRenderer(renderer);
